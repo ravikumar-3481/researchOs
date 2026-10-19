@@ -169,3 +169,7 @@ cache/
 # Local Vector & Metadata Stores
 *.sqlite3
 *.db
+
+
+# testing 
+test/*
