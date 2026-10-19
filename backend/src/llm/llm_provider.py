@@ -13,9 +13,15 @@ class LLMProviderError(Exception):
 
 PROVIDERS = {
     "openai": {"model": "gpt-4o-mini", "get_key": settings.get_openai_api_key},
-    "groq": {"model": "llama-3.3-70b-versatile", "get_key": settings.get_groq_api_key},
+    "groq": {"model": "openai/gpt-oss-20b", "get_key": settings.get_groq_api_key},
     "gemini": {"model": "gemini-2.5-flash", "get_key": settings.get_gemini_api_key},
 }
+
+# Provider aliases
+PROVIDER_ALIASES = {
+    "google": "gemini",
+}
+
 
 
 class LLM:
@@ -71,6 +77,7 @@ class LLM:
     ) -> BaseChatModel:
         """Return a chat model for the given provider. Results are cached."""
         provider = provider.lower()
+        provider = PROVIDER_ALIASES.get(provider, provider)
         if provider not in PROVIDERS:
             raise LLMProviderError(
                 f"Unsupported provider '{provider}'. Choose from: {', '.join(PROVIDERS)}"
@@ -114,6 +121,9 @@ class LLM:
                 _log.warning(f"Skipping fallback '{name}': {exc}")
 
         return main.with_fallbacks(backups) if backups else main
+
+    # Method alias for convenience
+    get_llm_with_fallback = get_llm_with_fallbacks
 
 
 # Usage:
