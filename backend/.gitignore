@@ -175,3 +175,5 @@ cache/
 test/*
 test/
 testing.py
+testing.py
+test/
