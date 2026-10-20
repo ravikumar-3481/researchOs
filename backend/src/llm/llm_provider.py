@@ -13,7 +13,7 @@ class LLMProviderError(Exception):
 
 PROVIDERS = {
     "openai": {"model": "gpt-4o-mini", "get_key": settings.get_openai_api_key},
-    "groq": {"model": "llama-3.3-70b-versatile", "get_key": settings.get_groq_api_key},
+    "groq": {"model": "openai/gpt-oss-20b", "get_key": settings.get_groq_api_key},
     "gemini": {"model": "gemini-2.5-flash", "get_key": settings.get_gemini_api_key},
 }
 
