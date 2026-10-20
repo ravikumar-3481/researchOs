@@ -66,4 +66,28 @@ This file records important code, configuration, dependency, schema, security, a
 - **Validation:** Verified via `python test/web_test.py` successfully fetching and parsing target web content with HTTP retry handling and clean text extraction.
 - **Follow-up:** Add unit tests for `ScraperSession` and integrate parsed web text into the chunking pipeline.
 
+## 2026-10-20 - Fix utils package imports and text splitter logger references
+
+- **Reason:** Resolve `ModuleNotFoundError: No module named 'utils'` encountered when running scripts from the backend root directory (`python test/web_test.py`).
+- **Files changed:**
+  - `backend/src/utils/text_cleaner.py`
+    - Lines 1-5: Corrected import to `from src.utils.logger import logger`.
+    - Lines 6-22: Formatted class and method type signatures for `TextCleaner`.
+  - `backend/src/text_splitter/splitter.py`
+    - Lines 1-4: Corrected import to `from src.utils import TextCleaner, logger`.
+    - Lines 6-10: Configured `self.log` and `self.log_ctx` logger adapters to avoid `AttributeError` during error handling.
+    - Lines 12-30: Added type hints and defensive exception handling with logging.
+  - `backend/src/text_splitter/__init__.py`
+    - Lines 1-6: Exported `Chunking` cleanly.
+  - `backend/src/utils/__init__.py`
+    - Lines 16, 33: Exported `TextCleaner` in `__all__`.
+  - `backend/src/__init__.py`
+    - Lines 1-25: Exported `Chunking`, `TextCleaner`, loaders, and logger utilities for direct package imports.
+- **Impact:** Ensures consistent absolute package import paths across `src` modules without assuming `src/` itself is in `sys.path`.
+- **Validation:**
+  - `.\.venv\Scripts\ruff check src/text_splitter src/utils/text_cleaner.py`: All checks passed.
+  - `.\.venv\Scripts\python test/web_test.py`: Scraped web content, cleaned extracted text, and generated 6 text chunks without errors (exit code 0).
+- **Follow-up:** None.
+
+
 

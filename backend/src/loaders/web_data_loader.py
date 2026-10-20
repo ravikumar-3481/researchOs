@@ -1,3 +1,4 @@
+
 import random
 import time
 
@@ -6,14 +7,14 @@ from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-
-from src.utils import logger
+from src.utils import logger, TextCleaner
 
 _log = logger.bind(service="web_data_loader")
 class ScraperSession:
     def __init__(self):
         self.session = requests.Session()
         self.ua = UserAgent()
+        self.cleaner = TextCleaner()
         
         # Retry strategy for network resilience
         retries = Retry(
@@ -70,6 +71,6 @@ def parse_data(soup: BeautifulSoup) -> dict[str, str]:
 
     return {
         "title": title,
-        "text": full_text
+        "text": TextCleaner.clean_data(full_text)
     }
 
