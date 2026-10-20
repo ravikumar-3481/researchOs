@@ -1,23 +1,4 @@
-"""
-Enterprise-Grade Production Logging System for ResearchOS.
 
-Features:
-- Multi-destination logging with separate file destinations:
-  - `logs/app.log`: General application activity (Rotating text log)
-  - `logs/error.log`: Warning, error, and critical logs only (Rotating text log with tracebacks)
-  - `logs/app.json.log`: Structured JSON lines for ELK/Datadog/CloudWatch ingestion
-  - Console: Rich formatted, color-coded, syntax-highlighted output with rich tracebacks
-- Correlation and Distributed Tracing:
-  - ContextVars for trace_id and user_id injected into all log records
-  - `trace_scope()` context manager for scoped request and task execution
-- Sensitive Data Redaction:
-  - Automatically masks passwords, API keys, tokens, and secrets in args, extra, and payloads
-- Function Execution Decorator:
-  - `@log_execution` / `@log_function`: Supports both async and sync functions,
-    captures inputs, latency/execution time in ms, results, and catches exceptions
-- Enterprise Audit & Metric Helpers:
-  - `log_audit()` and `log_metric()` for compliance and observability
-"""
 
 import functools
 import inspect
@@ -385,18 +366,7 @@ def log_execution(
     reraise: bool = True,
     logger_instance: Optional[logging.Logger] = None,
 ) -> Callable[[F], F]:
-    """
-    Enterprise function decorator to log calls, arguments, execution duration, and errors.
-    Supports both synchronous and asynchronous (coroutine) functions.
-
-    Args:
-        level: Log level for execution lifecycle (DEBUG, INFO).
-        log_args: Whether to log sanitized input arguments.
-        log_result: Whether to log the sanitized return value.
-        time_execution: Whether to record and log execution duration in ms.
-        reraise: Whether to re-raise caught exceptions after logging.
-        logger_instance: Specific logger to use, or default to caller's module logger.
-    """
+    
     log_level_num = getattr(logging, level.upper(), logging.INFO)
 
     def decorator(func: F) -> F:
