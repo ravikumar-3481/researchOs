@@ -13,6 +13,8 @@ from .logger import (
     setup_enterprise_logging,
     trace_scope,
 )
+from .text_cleaner import TextCleaner
+
 
 __all__ = [
     "logger",
@@ -28,4 +30,5 @@ __all__ = [
     "clear_context",
     "log_audit",
     "log_metric",
+    "TextCleaner",
 ]

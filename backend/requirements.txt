@@ -57,6 +57,7 @@ rich>=13.8,<14.0
 # Report and structured-data utilities
 orjson>=3.10,<4.0
 markdown>=3.7,<4.0
+docx
 
 # Testing and code quality (development; may be split into requirements-dev.txt later)
 pytest>=8.3,<9.0
@@ -65,3 +66,9 @@ ruff>=0.6,<1.0
 mypy>=1.11,<2.0
 
 fake-useragent
+
+
+
+# Chunking & embedding
+
+langchain-text-splitters>=1.1.2
