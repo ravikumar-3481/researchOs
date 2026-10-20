@@ -34,6 +34,7 @@
 
 ### P1 - RAG and integrations
 - [ ] `TASK-013` - Implement document ingestion, chunking, embeddings, hybrid retrieval, and reranking.
+  - Progress: PDF loader (`document_loader.py`) and Web scraper/parser (`web_data_loader.py`) implemented and verified. Remaining: text chunking, embeddings, and vector indexing.
 - [ ] `TASK-014` - Add one MCP server integration with schema validation and execution policy.
 - [ ] `TASK-015` - Add a second source connector, such as GitHub or scholarly metadata search.
 - [ ] `TASK-016` - Add contradiction analysis and research evaluation dataset.
